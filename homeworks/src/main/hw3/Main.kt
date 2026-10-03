@@ -21,8 +21,16 @@ fun main() {
         Event(title = "Check out latest Android Jetpack library", daypart = Daypart.EVENING, duration = 45)
     )
 
-    val shortEvents = events.filter {
-        it.duration < 60
+    val eventsByDaypart = events.groupBy {
+        it.daypart
     }
-    println("You have ${shortEvents.size} short events.")
+    eventsByDaypart.forEach {(daypart, events) ->
+        val capitalizedDaypart = daypart.name.lowercase().replaceFirstChar {
+            if (it.isLowerCase())
+                it.titlecase()
+            else
+                it.toString()
+        }
+        println("$capitalizedDaypart: ${events.size} events")
+    }
 }
