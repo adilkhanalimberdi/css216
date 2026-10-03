@@ -12,12 +12,16 @@ data class Event(
 )
 
 fun main() {
-    val event = Event(
-        title = "Study Kotlin",
-        description = "Commit to studying Kotlin at least 15 minutes per day",
-        daypart = Daypart.EVENING,
-        duration = 15
+    val events = mutableListOf(
+        Event(title = "Wake up", description = "Time to get up", daypart = Daypart.MORNING, duration = 0),
+        Event(title = "Eat breakfast", daypart = Daypart.MORNING, duration = 15),
+        Event(title = "Eat breakfast", daypart = Daypart.MORNING, duration = 15),
+        Event(title = "Practice Compose", daypart = Daypart.AFTERNOON, duration = 60),
+        Event(title = "Watch latest DevBytes video", daypart = Daypart.AFTERNOON, duration = 10),
+        Event(title = "Check out latest Android Jetpack library", daypart = Daypart.EVENING, duration = 45)
     )
 
-    println(event)
+    events.forEach {
+        println(it)
+    }
 }
