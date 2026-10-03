@@ -21,7 +21,8 @@ fun main() {
         Event(title = "Check out latest Android Jetpack library", daypart = Daypart.EVENING, duration = 45)
     )
 
-    events.forEach {
-        println(it)
+    val shortEvents = events.filter {
+        it.duration < 60
     }
+    println("You have ${shortEvents.size} short events.")
 }
