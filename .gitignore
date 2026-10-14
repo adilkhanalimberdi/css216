@@ -4,3 +4,7 @@
 .kotlin
 *.iml
 out
+build
+.gradle
+local.properties
+*.apk
