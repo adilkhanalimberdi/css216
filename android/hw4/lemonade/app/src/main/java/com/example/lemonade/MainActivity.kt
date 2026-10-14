@@ -1,10 +1,11 @@
 package com.example.lemonade
 
 import android.os.Bundle
-import android.view.RoundedCorner
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,11 +45,31 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class LemonadeState {
-    START,
-    SQUEEZE,
-    DRINK,
-    RESTART
+enum class LemonadeState(
+    val image: Int,
+    val text: Int,
+    val description: Int
+) {
+    START(
+        image = R.drawable.lemon_tree,
+        text = R.string.start,
+        description = R.string.lemon_tree
+    ),
+    SQUEEZE(
+        image = R.drawable.lemon_squeeze,
+        text = R.string.squeeze,
+        description = R.string.lemon
+    ),
+    DRINK(
+        image = R.drawable.lemon_drink,
+        text = R.string.drink,
+        description = R.string.glass_of_lemonade
+    ),
+    RESTART(
+        image = R.drawable.lemon_restart,
+        text = R.string.restart,
+        description = R.string.empty_glass
+    ),
 }
 
 @Composable
@@ -86,13 +107,13 @@ fun LemonadeApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun LemonadeContent(modifier: Modifier = Modifier) {
-    var state by remember { mutableStateOf(LemonadeState.START) }
-    var repeat by remember { mutableIntStateOf(1) }
+    var state by rememberSaveable { mutableStateOf(LemonadeState.START) }
+    var steps by rememberSaveable { mutableIntStateOf(1) }
 
     fun transition() {
-        if (repeat > 1) {
-            repeat -= 1;
-            return;
+        if (steps > 1) {
+            steps -= 1
+            return
         }
 
         state = when (state) {
@@ -102,20 +123,7 @@ fun LemonadeContent(modifier: Modifier = Modifier) {
             LemonadeState.RESTART -> LemonadeState.START
         }
 
-        repeat = if (state == LemonadeState.SQUEEZE) (1..5).random() else 1
-    }
-
-    val imageResource = when (state) {
-        LemonadeState.START -> R.drawable.lemon_tree
-        LemonadeState.SQUEEZE -> R.drawable.lemon_squeeze
-        LemonadeState.DRINK -> R.drawable.lemon_drink
-        else -> R.drawable.lemon_restart
-    }
-    val textResource = when (state) {
-        LemonadeState.START -> R.string.start
-        LemonadeState.SQUEEZE -> R.string.squeeze
-        LemonadeState.DRINK -> R.string.drink
-        else -> R.string.restart
+        steps = if (state == LemonadeState.SQUEEZE) (1..5).random() else 1
     }
 
     Column(
@@ -132,13 +140,13 @@ fun LemonadeContent(modifier: Modifier = Modifier) {
             shape = RoundedCornerShape(12.dp),
         ) {
             Image(
-                painter = painterResource(imageResource),
-                contentDescription = state.toString()
+                painter = painterResource(state.image),
+                contentDescription = stringResource(state.description)
             )
         }
 
         Text(
-            text = stringResource(textResource)
+            text = stringResource(state.text)
         )
     }
 }
