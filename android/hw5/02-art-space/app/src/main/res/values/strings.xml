@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Art Space</string>
+    <string name="title_1">Starry Night</string>
+    <string name="title_2">Mona Lisa</string>
+    <string name="title_3">The Son of Man</string>
+    <string name="author_1">Vincent Van Gogh</string>
+    <string name="author_2">Leonardo da Vinci</string>
+    <string name="author_3">René Magritte</string>
+    <string name="year_1">1889</string>
+    <string name="year_2">1503–1519</string>
+    <string name="year_3">1964</string>
+</resources>
