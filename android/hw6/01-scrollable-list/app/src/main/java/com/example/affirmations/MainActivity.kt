@@ -93,6 +93,7 @@ fun AffirmationList(affirmations: List<Affirmation>, modifier: Modifier = Modifi
     }
 }
 
+
 @Composable
 fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
     Card(modifier = modifier) {
